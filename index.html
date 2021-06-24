@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="showcase">
+      <h1>Tic Tac Toe</h1>
+      <video src="videos/game.mp4" muted loop autoplay></video>
+      <div class="overlay"></div>
+      <div id="players">
+        <div class="player-vs-player active-mode">
+          <p class="player-choice">Player vs Player</p>
+        </div>
+        <div class="player-vs-ai">
+          <p class="player-choice">Player vs AI</p>
+        </div>
+      </div>
+    </div>
+    <!-- player's turn will go here -->
+    <p class="toggle-player-turn">player O's turn</p>
+    <div id="play-ground">
+      <div class="box-1 box" data-box-num="1"></div>
+      <div class="box-2 box" data-box-num="2"></div>
+      <div class="box-3 box" data-box-num="3"></div>
+      <div class="box-4 box" data-box-num="4"></div>
+      <div class="box-5 box" data-box-num="5"></div>
+      <div class="box-6 box" data-box-num="6"></div>
+      <div class="box-7 box" data-box-num="7"></div>
+      <div class="box-8 box" data-box-num="8"></div>
+      <div class="box-9 box" data-box-num="9"></div>
+    </div>
+    <script src="js/tictactoe.js"></script>
+  </body>
+</html>

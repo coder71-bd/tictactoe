@@ -1,0 +1,100 @@
+:root {
+  /* height of playground boxes */
+  --box-size: 15rem;
+  /*playGround*/
+  --play-background: #153b2f;
+  --box-background: #a1e95ecc;
+  --box-text-color: #0909ff;
+  /*padding*/
+  --playground-padding: 5rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 10px;
+}
+
+.showcase {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #111111;
+  color: #fff;
+  z-index: 2;
+}
+
+.showcase video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
+h1 {
+  font-size: 3.6em;
+  margin-bottom: 5rem;
+  z-index: 1;
+}
+
+#players div {
+  text-align: center;
+  width: 20rem;
+  font-size: 1.2em;
+  padding: 1.5rem;
+  border: 1px solid white;
+  border-radius: 50px;
+  background-color: rgb(9, 2, 51);
+  margin-bottom: 3rem;
+}
+
+#players div:hover {
+  cursor: pointer;
+}
+
+#players {
+  font-size: 2em;
+  z-index: 1;
+}
+
+#play-ground {
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  padding: var(--playground-padding);
+  margin: 0 auto;
+  background-color: var(--play-background);
+}
+
+.toggle-player-turn {
+  font-size: 5em;
+}
+
+#play-ground div {
+  height: var(--box-size);
+  background-color: var(--box-background);
+  border: 1px solid black;
+}
+
+.box {
+  font-size: 3em;
+  color: var(--box-text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
