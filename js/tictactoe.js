@@ -22,12 +22,14 @@ const gameMode = (() => {
     let truthCheck = false;
     let winningPlayer;
     array.forEach((arr) => {
-      winningPlayer = arr[0];
       if (matchCheck(...arr)) {
+        winningPlayer = arr[0];
         truthCheck = true;
       }
     });
-    if (truthCheck) return winningPlayer;
+    if (truthCheck) {
+      return winningPlayer;
+    }
   };
 
   //return the inner text of the gameboard boxes
@@ -56,8 +58,13 @@ const gameMode = (() => {
   };
 
   const playerVsPlayer = () => {
-    //the first player move will be 'X'
-    let boxValue = 'X';
+    //first player turn will be 'X'
+    togglePlayerTurn.textContent = "player X's turn";
+    //first player move will be 'X'
+    let boxValue = 'O';
+
+    //if the array size is 9 and not found any winner then the match will be draw
+    let drawCheck = [];
 
     playGroundBox.forEach((elem) =>
       elem.addEventListener('click', () => {
@@ -67,10 +74,12 @@ const gameMode = (() => {
           elem.innerText !== 'X' &&
           elem.innerText !== 'O'
         ) {
-          if (boxValue === 'X') {
-            boxValue = 'O';
-          } else {
+          if (boxValue === 'O') {
             boxValue = 'X';
+            drawCheck.push(boxValue);
+          } else {
+            boxValue = 'O';
+            drawCheck.push(boxValue);
           }
           elem.innerText = boxValue;
         }
@@ -83,46 +92,85 @@ const gameMode = (() => {
 
         //the box value will be the winning players move
         if (checkForWin(matchArr)) {
-          console.log(`game Finished: ${boxValue}  has won!`);
+          const boxElem = document.querySelector(
+            `.box-${checkForWin(matchArr)}`
+          );
+          console.log(`game Finished: ${boxElem.textContent}  has won!`);
+        } else {
+          if (drawCheck.length === 9) {
+            console.log(`game is draw: try again`);
+          }
         }
       })
     );
   };
 
   const playerVsAi = () => {
+    //first move will be from player
+    togglePlayerTurn.textContent = "player's turn";
+
+    //containing unique numbers from generateMove and player clicking boxes dataSet(boxNum)
     let randomNumContainer = [];
 
     playGroundBox.forEach((elem) => {
       elem.addEventListener('click', () => {
-        let boxValue = 'X';
         if (elem.textContent === '') {
+          //giving player informaiton that ai is deciding
+          togglePlayerTurn.textContent = 'Wait for Ai';
+
+          //player move
           if (elem.textContent !== 'O') {
             randomNumContainer.push(elem.dataset.boxNum);
             elem.textContent = 'X';
-            boxValue = 'X';
           }
+
+          //Ai move
           setTimeout(() => {
             const boxElem = document.querySelector(`.box-${generateMove()}`);
             boxElem !== null ? (boxElem.textContent = 'O') : '';
-            boxValue = 'O';
+            togglePlayerTurn.textContent = "player's turn";
           }, 500);
-        }
-        setTimeout(() => {
+
+          //if the result is not produced for 'X' then the result may be produced from 'O'
           if (checkForWin(matchArr)) {
-            console.log(`game finished: ${boxValue} has won`);
+            //resullt for player
+            setTimeout(() => {
+              resultOfGame();
+            }, 550);
+          } else {
+            //result for AI
+            setTimeout(() => {
+              resultOfGame();
+            }, 550);
           }
-        }, 550);
+        }
       });
     });
 
+    //producing result after checking for winner
+    const resultOfGame = () => {
+      if (checkForWin(matchArr)) {
+        const boxElem = document.querySelector(`.box-${checkForWin(matchArr)}`);
+        let winner = boxElem.innerText === 'X' ? 'player' : 'AI';
+        console.log(`game finished: ${winner} has won`);
+      } else {
+        if (randomNumContainer.length === 9) {
+          console.log('match is draw! try again');
+        }
+      }
+    };
+
     //generating a random num from 1 - 9 until the game is over
     const generateMove = () => {
-      let randomNum = Math.floor(Math.random() * (10 - 1) + 1);
-
+      // this is preventing maximum call stack size error
       if (randomNumContainer.length === 9) {
         return false;
       }
 
+      //random number between 1 - 9
+      let randomNum = Math.floor(Math.random() * (10 - 1) + 1);
+
+      //checking that the number is available in randomNumContainer or not
       const found = randomNumContainer.find((num) => num == randomNum);
 
       if (!found) {
@@ -133,8 +181,17 @@ const gameMode = (() => {
       }
     };
   };
+
+  //returning two game mode
   return { playerVsPlayer, playerVsAi };
 })();
 
-gameMode.playerVsPlayer();
-// gameMode.playerVsAi();
+// gameMode.playerVsPlayer();
+gameMode.playerVsAi();
+
+//todo
+/*
+  4. toggle the game mode after clicking the playerVsPlayer or playerVsAi button in index.html
+  5. add beautiful layout for the gameboard
+  6 add animation when the game first load
+*/

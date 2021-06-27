@@ -1,12 +1,16 @@
 :root {
-  /* height of playground boxes */
-  --box-size: 15rem;
+  /* general rule */
+  --button-radius: 2rem;
+
+  /* container */
+  --container-color: #fff;
+
   /*playGround*/
-  --play-background: #153b2f;
   --box-background: #a1e95ecc;
   --box-text-color: #0909ff;
-  /*padding*/
-  --playground-padding: 5rem;
+
+  /* height of playground boxes */
+  --box-size: 13rem;
 }
 
 * {
@@ -15,27 +19,27 @@
   box-sizing: border-box;
 }
 
+/* setting font-size to 10px for easily understanding rem and em units */
 html,
 body {
   font-size: 10px;
 }
 
-.showcase {
+/* styling the container */
+
+.container {
+  display: flex;
   position: absolute;
-  right: 0;
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #111111;
-  color: #fff;
+  color: var(--container-color);
   z-index: 2;
+  /*if video is not supported */
+  background-color: #111;
 }
 
-.showcase video {
+/* setting the video as background */
+video {
   position: absolute;
   top: 0;
   left: 0;
@@ -43,58 +47,122 @@ body {
   height: 100%;
   object-fit: cover;
   opacity: 0.7;
+  z-index: -1;
 }
 
+/*position the player container in center */
+.player-container {
+  /* display: none; */
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+/* home-page heading */
 h1 {
-  font-size: 3.6em;
+  font-size: 10em;
   margin-bottom: 5rem;
-  z-index: 1;
+  text-align: center;
+  /* animation: text_dance 1.5s ease-in infinite; */
 }
 
-#players div {
-  text-align: center;
+@keyframes text_dance {
+  0% {
+    transform: skew(0deg);
+  }
+  30% {
+    transform: skew(-60deg);
+  }
+  80% {
+    transform: skew(60deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 5em;
+  }
+}
+/* player's in home-page to enter into different game mode */
+#players {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.choice {
   width: 20rem;
-  font-size: 1.2em;
-  padding: 1.5rem;
+  font-size: 1.5em;
+  padding: 1rem;
   border: 1px solid white;
-  border-radius: 50px;
-  background-color: rgb(9, 2, 51);
+  border-radius: var(--button-radius);
+  /* background-color: rgb(9, 2, 51); */
   margin-bottom: 3rem;
 }
 
-#players div:hover {
+.choice:hover {
   cursor: pointer;
 }
 
-#players {
-  font-size: 2em;
-  z-index: 1;
+/* player turn showing text */
+.toggle-player-turn {
+  text-align: center;
+  font-size: 5em;
+  margin-bottom: 3rem;
 }
 
+.game-container {
+  /* display: none; */
+  width: 450px;
+  padding: 1rem;
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* play ground container */
 #play-ground {
-  max-width: 800px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  padding: var(--playground-padding);
-  margin: 0 auto;
-  background-color: var(--play-background);
 }
 
-.toggle-player-turn {
-  font-size: 5em;
-}
-
-#play-ground div {
+/* each boxes in play-ground */
+.box {
   height: var(--box-size);
   background-color: var(--box-background);
   border: 1px solid black;
-}
-
-.box {
   font-size: 3em;
   color: var(--box-text-color);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.change-mode,
+.restart {
+  width: 15rem;
+  padding: 1.5rem;
+  font-size: 1.5em;
+  border-radius: var(--button-radius);
+}
+
+.change-mode:hover,
+.restart:hover {
+  cursor: pointer;
 }
